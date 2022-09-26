@@ -25,11 +25,7 @@ async function initializeSlides() {
     let slideUrl = slideContent['url']
 
     console.log(slideId, slideName, slideDesc, slidePrev, slidePrice, slideUrl)
-    let button
-    if (!isAuthenticated)
-      button = "View"
-
-    button = "Edit"
+    let button = isAuthenticated ? "Edit" : "View"
     let div = document.createElement("div");
     div.classList.add("col");
     div.innerHTML = `
