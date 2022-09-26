@@ -1,4 +1,5 @@
 async function initializeSlides() {
+  let isAuthenticated = localStorage.getItem('token')
   let slides
 
   const res = await fetch('https://slides.cyclic.app/api/listJson')
@@ -24,7 +25,11 @@ async function initializeSlides() {
     let slideUrl = slideContent['url']
 
     console.log(slideId, slideName, slideDesc, slidePrev, slidePrice, slideUrl)
+    let button
+    if (!isAuthenticated)
+      button = "View"
 
+    button = "Edit"
     let div = document.createElement("div");
     div.classList.add("col");
     div.innerHTML = `
@@ -40,7 +45,7 @@ async function initializeSlides() {
       <p class="card-text"><b>${slideName}</b></br><i>${slideDesc}</i></p>
       <div class="d-flex justify-content-between align-items-center">
         <div class="btn-group">
-          <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+          <button type="button" class="btn btn-sm btn-outline-secondary">${button}</button>
         </div>
         <small class="text-muted">${slidePrice}</small>
       </div>
