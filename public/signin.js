@@ -22,5 +22,5 @@ const signIn = () => {
       console.error('Error:', error)
     })
 
-  window.location.assign("https://slides-web.cyclic.app")
+  window.location.assign("/")
 }
