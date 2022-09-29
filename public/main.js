@@ -10,7 +10,7 @@ const parseJwt = (token) => {
 
 const isAdmin = () => {
   const JWT = localStorage.getItem('token')
-  const role = parseJwt(JWT)[1]
+  const role = parseJwt(JWT)['role']
 
   if (role !== 'admin')
     return false

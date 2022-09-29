@@ -1,4 +1,4 @@
-const sendPass = () => {
+const signIn = () => {
   const username = document.getElementById("username").value
   const password = document.getElementById("password").value
   const data = {
@@ -22,6 +22,5 @@ const sendPass = () => {
       console.error('Error:', error)
     })
 
-  window.location.href("https://slides-web.cyclic.app");
-
+  window.location.assign("https://slides-web.cyclic.app")
 }
