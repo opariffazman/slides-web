@@ -21,6 +21,14 @@ const isAdmin = () => {
   return true
 }
 
+const enableAddButton = () => {
+  document.getElementById('addButton').style.display = 'block'
+}
+
+const goToAddSlide = () => {
+  window.location.assign("/add")
+}
+
 async function initializeSlides() {
   let slides
 
@@ -77,18 +85,21 @@ async function initializeSlides() {
   }
 }
 
-initializeSlides()
+window.onload = () => {
+  if (isAdmin())
+    enableAddButton()
 
-window.onload = function () {
-  var slideModal = document.getElementById('slideModal')
+  initializeSlides()
+
+  let slideModal = document.getElementById('slideModal')
   slideModal.addEventListener('show.bs.modal', function (event) {
     // Button that triggered the modal
-    var button = event.relatedTarget
+    let button = event.relatedTarget
     // Extract info from data-bs-* attributes
-    var slideName = button.getAttribute('data-bs-name')
-    var slideDesc = button.getAttribute('data-bs-desc')
-    var slidePrev = button.getAttribute('data-bs-preview')
-    var slidePrice = button.getAttribute('data-bs-price')
+    let slideName = button.getAttribute('data-bs-name')
+    let slideDesc = button.getAttribute('data-bs-desc')
+    let slidePrev = button.getAttribute('data-bs-preview')
+    let slidePrice = button.getAttribute('data-bs-price')
 
     slideModal.querySelector('.modal-title').textContent = slideName
     slideModal.querySelector('.modal-desc').textContent = slideDesc
