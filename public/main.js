@@ -1,5 +1,24 @@
+const parseJwt = (token) => {
+  let base64Url = token.split('.')[1]
+  let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+  let jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+  }).join(''))
+
+  return JSON.parse(jsonPayload);
+}
+
+const isAdmin = () => {
+  const JWT = localStorage.getItem('token')
+  const role = parseJwt(JWT)[1]
+
+  if (role !== 'admin')
+    return false
+
+  return true
+}
+
 async function initializeSlides() {
-  let isAuthenticated = localStorage.getItem('token')
   let slides
 
   const res = await fetch('https://slides.cyclic.app/api/listJson')
@@ -25,7 +44,7 @@ async function initializeSlides() {
     let slideUrl = slideContent['url']
 
     console.log(slideId, slideName, slideDesc, slidePrev, slidePrice, slideUrl)
-    let button = isAuthenticated ? "Edit" : "View"
+    let button = isAdmin() ? "Edit" : "View"
     let div = document.createElement("div");
     div.classList.add("col");
     div.innerHTML = `
