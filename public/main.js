@@ -42,7 +42,7 @@ async function initializeSlides() {
     let slidePrev = slideContent['preview']
     let slidePrice = slideContent['price']
     let slideUrl = slideContent['url']
-    let slideModal = `slideModal${slideId}`
+    let slideModal = `${slideId}Modal`
 
     console.log(slideId, slideName, slideDesc, slidePrev, slidePrice, slideUrl)
     let button = isAdmin() ? "Edit" : "View"
@@ -61,14 +61,14 @@ async function initializeSlides() {
       <p class="card-text"><b>${slideName}</b></br><i>${slideDesc}</i></p>
       <div class="d-flex justify-content-between align-items-center">
         <div class="btn-group">
-          <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="${slideModal}"">${button}</button>
+          <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#${slideModal}"">${button}</button>
         </div>
         <small class="text-muted">${slidePrice}</small>
       </div>
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="${slideModal}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="${slideModal}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="${slideModal}Label" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -80,7 +80,7 @@ async function initializeSlides() {
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-primary">Understood</button>
           </div>
         </div>
       </div>
