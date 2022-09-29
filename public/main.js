@@ -9,6 +9,9 @@ const parseJwt = (token) => {
 }
 
 const isAdmin = () => {
+  if (localStorage.getItem('token') !== '')
+    return
+
   const JWT = localStorage.getItem('token')
   const role = parseJwt(JWT)['role']
 
@@ -42,7 +45,6 @@ async function initializeSlides() {
     let slidePrev = slideContent['preview']
     let slidePrice = slideContent['price']
     let slideUrl = slideContent['url']
-    let slideModal = `${slideId}Modal`
 
     console.log(slideId, slideName, slideDesc, slidePrev, slidePrice, slideUrl)
     let button = isAdmin() ? "Edit" : "View"
@@ -61,28 +63,13 @@ async function initializeSlides() {
       <p class="card-text"><b>${slideName}</b></br><i>${slideDesc}</i></p>
       <div class="d-flex justify-content-between align-items-center">
         <div class="btn-group">
-          <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#${slideModal}"">${button}</button>
+          <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#slideModal"
+          data-bs-name="${slideName}"
+          data-bs-desc="${slideDesc}"
+          data-bs-preview="${slidePrev}"
+          data-bs-price="${slidePrice}">${button}</button>
         </div>
         <small class="text-muted">${slidePrice}</small>
-      </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="${slideModal}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="${slideModal}Label" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="${slideModal}Label">Modal title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Understood</button>
-          </div>
-        </div>
       </div>
     </div>
     `
@@ -91,3 +78,20 @@ async function initializeSlides() {
 }
 
 initializeSlides()
+
+window.onload = function () {
+  var slideModal = document.getElementById('slideModal')
+  slideModal.addEventListener('show.bs.modal', function (event) {
+    // Button that triggered the modal
+    var button = event.relatedTarget
+    // Extract info from data-bs-* attributes
+    var slideName = button.getAttribute('data-bs-name')
+    var slideDesc = button.getAttribute('data-bs-desc')
+    var slidePrev = button.getAttribute('data-bs-preview')
+    var slidePrice = button.getAttribute('data-bs-price')
+
+    slideModal.querySelector('.modal-title').textContent = slideName
+    slideModal.querySelector('.modal-desc').textContent = slideDesc
+    slideModal.querySelector('.modal-price').textContent = slidePrice
+  })
+}
