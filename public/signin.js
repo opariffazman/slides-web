@@ -1,6 +1,10 @@
 const sendPass = () => {
+  const username = document.getElementById("username").value
   const password = document.getElementById("password").value
-  const data = { password: password }
+  const data = {
+    username: username,
+    password: password
+  }
 
   fetch('https://slides.cyclic.app/api/signin', {
     method: 'POST', // or 'PUT'
