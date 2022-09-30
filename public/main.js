@@ -75,15 +75,17 @@ async function initializeSlides() {
   }
 }
 
-const isAdmin = () => {
-  if (parseJwt(localStorage.getItem('token'))['role'] != 'admin')
-    return false
 
-  return true
-}
 
 window.onload = () => {
   const localStorage = window.localStorage
+
+  const isAdmin = () => {
+    if (parseJwt(localStorage.getItem('token'))['role'] != 'admin')
+      return false
+
+    return true
+  }
 
   if (isAdmin())
     enableAddButton()
