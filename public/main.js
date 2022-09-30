@@ -91,9 +91,6 @@ async function initializeSlides() {
   }
 }
 
-if (isAdmin())
-    enableAddButton()
-
 window.onload = () => {
   initializeSlides()
 
@@ -113,15 +110,18 @@ window.onload = () => {
   })
 }
 
-const localStorageAsync = {
-  set: function (key, value) {
-      return Promise.resolve().then(function () {
-          localStorage.setItem(key, value)
-      })
-  },
-  get: function (key) {
-      return Promise.resolve().then(function () {
-          return localStorage.getItem(key)
-      })
-  }
-}
+if (isAdmin())
+    enableAddButton()
+
+// const localStorageAsync = {
+//   set: function (key, value) {
+//       return Promise.resolve().then(function () {
+//           localStorage.setItem(key, value)
+//       })
+//   },
+//   get: function (key) {
+//       return Promise.resolve().then(function () {
+//           return localStorage.getItem(key)
+//       })
+//   }
+// }
