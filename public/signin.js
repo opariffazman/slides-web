@@ -16,11 +16,24 @@ const signIn = () => {
     .then((response) => response.json())
     .then((data) => {
       console.log('Success:', data)
-      localStorage.setItem('token', JSON.stringify(data))
+      localStorageAsync.set('token', JSON.stringify(data))
     })
     .catch((error) => {
       console.error('Error:', error)
     })
 
   window.location.assign("/")
+}
+
+const localStorageAsync = {
+  set: function (key, value) {
+      return Promise.resolve().then(function () {
+          localStorage.setItem(key, value)
+      })
+  },
+  get: function (key) {
+      return Promise.resolve().then(function () {
+          return localStorage.getItem(key)
+      })
+  }
 }
