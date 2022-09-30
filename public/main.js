@@ -9,13 +9,13 @@ const parseJwt = (token) => {
 }
 
 const isAdmin = () => {
-  localStorageAsync.get('token')
-  if (localStorageAsync.get('token') !== ''){
+  localStorage.get('token')
+  if (localStorage.get('token') !== ''){
     console.log('no token')
     return false
   }
 
-  const JWT = localStorageAsync.get('token')
+  const JWT = localStorage.get('token')
   const role = parseJwt(JWT)['role']
 
   if (role !== 'admin'){
