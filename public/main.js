@@ -1,4 +1,3 @@
-const localStorage = window.localStorage
 
 const parseJwt = (token) => {
   let base64Url = token.split('.')[1]
@@ -10,24 +9,7 @@ const parseJwt = (token) => {
   return JSON.parse(jsonPayload);
 }
 
-const isAdmin = () => {
-  localStorage.getItem('token')
-  if (localStorage.getItem('token') !== ''){
-    console.log('no token')
-    return false
-  }
 
-  const JWT = localStorage.getItem('token')
-  const role = parseJwt(JWT)['role']
-
-  if (role !== 'admin'){
-    console.log('! isAdmin()')
-    return false
-  }
-
-  console.log('isAdmin()')
-  return true
-}
 
 const enableAddButton = () => {
   document.getElementById('addButton').style.display = 'block'
@@ -93,7 +75,25 @@ async function initializeSlides() {
   }
 }
 
+const isAdmin = () => {
+  if (localStorage.getItem('token') !== '')
+    return false
+
+  const JWT = localStorage.getItem('token')
+  const role = parseJwt(JWT)['role']
+
+  if (role !== 'admin')
+    return false
+
+  return true
+}
+
 window.onload = () => {
+  const localStorage = window.localStorage
+
+  if (isAdmin())
+    enableAddButton()
+
   initializeSlides()
 
   let slideModal = document.getElementById('slideModal')
@@ -112,8 +112,7 @@ window.onload = () => {
   })
 }
 
-if (isAdmin())
-    enableAddButton()
+
 
 // const localStorageAsync = {
 //   set: function (key, value) {
