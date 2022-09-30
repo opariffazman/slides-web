@@ -76,13 +76,7 @@ async function initializeSlides() {
 }
 
 const isAdmin = () => {
-  if (localStorage.getItem('token') !== '')
-    return false
-
-  const JWT = localStorage.getItem('token')
-  const role = parseJwt(JWT)['role']
-
-  if (role !== 'admin')
+  if (parseJwt(localStorage.getItem('token'))['role'] != 'admin')
     return false
 
   return true
