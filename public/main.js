@@ -9,15 +9,20 @@ const parseJwt = (token) => {
 }
 
 const isAdmin = () => {
-  if (localStorage.getItem('token') !== '')
-    return
+  if (localStorage.getItem('token') !== ''){
+    console.log('no token')
+    return false
+  }
 
   const JWT = localStorage.getItem('token')
   const role = parseJwt(JWT)['role']
 
-  if (role !== 'admin')
+  if (role !== 'admin'){
+    console.log('! isAdmin()')
     return false
+  }
 
+  console.log('isAdmin()')
   return true
 }
 
@@ -56,7 +61,7 @@ async function initializeSlides() {
 
     console.log(slideId, slideName, slideDesc, slidePrev, slidePrice, slideUrl)
     let button = isAdmin() ? "Edit" : "View"
-    let div = document.createElement("div");
+    let div = document.createElement("div")
     div.classList.add("col");
     div.innerHTML = `
     <div class="card shadow-sm">
@@ -81,7 +86,7 @@ async function initializeSlides() {
       </div>
     </div>
     `
-    container.appendChild(div);
+    container.appendChild(div)
   }
 }
 
