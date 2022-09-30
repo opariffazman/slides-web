@@ -32,7 +32,7 @@ const addSlide = () => {
     },
     body: JSON.stringify(data),
   })
-    .then((response) => response.json())
+    .then((response) => response)
     .then((data) => {
       console.log('Success:', data)
     })
