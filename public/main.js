@@ -9,12 +9,12 @@ const parseJwt = (token) => {
 }
 
 const isAdmin = () => {
-  if (localStorage.getItem('token') !== ''){
+  if (localStorageAsync.get('token') !== ''){
     console.log('no token')
     return false
   }
 
-  const JWT = localStorage.getItem('token')
+  const JWT = localStorageAsync.get('token')
   const role = parseJwt(JWT)['role']
 
   if (role !== 'admin'){
@@ -110,4 +110,17 @@ window.onload = () => {
     slideModal.querySelector('.modal-desc').textContent = slideDesc
     slideModal.querySelector('.modal-price').textContent = slidePrice
   })
+}
+
+const localStorageAsync = {
+  set: function (key, value) {
+      return Promise.resolve().then(function () {
+          localStorage.setItem(key, value)
+      })
+  },
+  get: function (key) {
+      return Promise.resolve().then(function () {
+          return localStorage.getItem(key)
+      })
+  }
 }
