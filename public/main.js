@@ -9,6 +9,7 @@ const parseJwt = (token) => {
 }
 
 const isAdmin = () => {
+  localStorageAsync.get('token')
   if (localStorageAsync.get('token') !== ''){
     console.log('no token')
     return false
