@@ -8,7 +8,7 @@ window.onload = () => {
   async function initializeSlides() {
     let slides
 
-    const res = await fetch('https://slides.cyclic.app/api/listJson')
+    const res = await fetch('https://slides.cyclic.app/api/listPackage')
 
     slides = await res.json()
 

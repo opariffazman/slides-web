@@ -15,7 +15,6 @@ const addSlide = () => {
 
   const data = {
     uid: uid,
-    type: 'package',
     tajuk: tajuk,
     tingkatan: tingkatan,
     subjek: subjek,
@@ -25,7 +24,7 @@ const addSlide = () => {
   }
 
   const accessToken = JSON.parse(localStorage.getItem('token'))['accessToken']
-  fetch(`https://slides.cyclic.app/api/files?name=${uid}`, {
+  fetch(`https://slides.cyclic.app/api/files?name=package${uid}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
