@@ -1,10 +1,12 @@
+const localStorage = window.localStorage
+
 const generateUID = () => {
   return Date.now().toString(36) + Math.random().toString(36).substring(2);
 }
 
 const addSlide = () => {
   const uid = generateUID()
-  const pakej = document.getElementById("pakej").value
+  const tajuk = document.getElementById("tajuk").value
   const tingkatan = document.getElementById("tingkatan").value
   const subjek = document.getElementById("subjek").value
   const isi = document.getElementById("isi").value
@@ -13,7 +15,8 @@ const addSlide = () => {
 
   const data = {
     uid: uid,
-    pakej: pakej,
+    type: 'package',
+    tajuk: tajuk,
     tingkatan: tingkatan,
     subjek: subjek,
     isi: isi,
@@ -21,10 +24,12 @@ const addSlide = () => {
     url: url
   }
 
+  const accessToken = JSON.parse(localStorage.getItem('token'))['accessToken']
   fetch(`https://slides.cyclic.app/api/files?name=${uid}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`
     },
     body: JSON.stringify(data),
   })

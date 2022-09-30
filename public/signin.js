@@ -1,3 +1,5 @@
+const localStorage = window.localStorage
+
 const signIn = () => {
   const username = document.getElementById("username").value
   const password = document.getElementById("password").value

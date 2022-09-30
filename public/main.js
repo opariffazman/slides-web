@@ -17,43 +17,43 @@ window.onload = () => {
       let slide = slides[index].Key
       slide = slide.replace(".json", "")
 
-      let slideContent
-
       const res = await fetch(`https://slides.cyclic.app/api/files?name=${slide}`)
 
-      slideContent = await res.json()
+      let packageInfo = await res.json()
 
-      let slideId = slideContent['id']
-      let slideName = slideContent['name']
-      let slideDesc = slideContent['description']
-      let slidePrev = slideContent['preview']
-      let slidePrice = slideContent['price']
-      let slideUrl = slideContent['url']
+      let packageId = packageInfo['id']
+      let packageTajuk = packageInfo['tajuk']
+      let packageTingkatan = packageInfo['tingkatan']
+      let packageSubjek = packageInfo['subjek']
+      let packageIsi = packageInfo['isi']
+      let packagePrice = packageInfo['price']
+      let packageUrl = packageInfo['url']
 
-      console.log(slideId, slideName, slideDesc, slidePrev, slidePrice, slideUrl)
+      console.log(packageId, packageTajuk, packageTingkatan, packageIsi, packageSubjek, packagePrice, packageUrl)
       let button = isAdmin() ? "Edit" : "View"
       let div = document.createElement("div")
       div.classList.add("col");
       div.innerHTML = `
       <div class="card shadow-sm">
       <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
-        role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+        role="img" aria-label="${packageTajuk}" preserveAspectRatio="xMidYMid slice" focusable="false">
         <title>Placeholder</title>
         <rect width="100%" height="100%" fill="#55595c" />
-        <text x="50%" y="50%" fill="#eceeef" dy=".3em">${slidePrev}</text>
+        <text x="50%" y="50%" fill="#eceeef" dy=".3em">${packageTajuk}</text>
       </svg>
 
       <div class="card-body">
-        <p class="card-text"><b>${slideName}</b></br><i>${slideDesc}</i></p>
+        <p class="card-text"><b>${packageTajuk}</b></br><i>${packageIsi}</i></p>
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group">
             <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#slideModal"
-            data-bs-name="${slideName}"
-            data-bs-desc="${slideDesc}"
-            data-bs-preview="${slidePrev}"
-            data-bs-price="${slidePrice}">${button}</button>
+            data-bs-tajuk="${packageTajuk}"
+            data-bs-tingkatan="${packageTingkatan}"
+            data-bs-isi="${packageIsi}"
+            data-bs-subjek="${packageSubjek}"
+            data-bs-price="${packagePrice}">${button}</button>
           </div>
-          <small class="text-muted">${slidePrice}</small>
+          <small class="text-muted">${packagePrice}</small>
         </div>
       </div>
       `
@@ -94,13 +94,16 @@ window.onload = () => {
     // Button that triggered the modal
     let button = event.relatedTarget
     // Extract info from data-bs-* attributes
-    let slideName = button.getAttribute('data-bs-name')
-    let slideDesc = button.getAttribute('data-bs-desc')
-    let slidePrev = button.getAttribute('data-bs-preview')
-    let slidePrice = button.getAttribute('data-bs-price')
+    let packageTajuk = button.getAttribute('data-bs-tajuk')
+    let packageTingkatan = button.getAttribute('data-bs-tingkatan')
+    let packageIsi = button.getAttribute('data-bs-isi')
+    let packageSubjek = button.getAttribute('data-bs-subjek')
+    let packagePrice = button.getAttribute('data-bs-price')
 
-    slideModal.querySelector('.modal-title').textContent = slideName
-    slideModal.querySelector('.modal-desc').textContent = slideDesc
-    slideModal.querySelector('.modal-price').textContent = slidePrice
+    slideModal.querySelector('.modal-tajuk').textContent = packageTajuk
+    slideModal.querySelector('.modal-tingkatan').textContent = packageTingkatan
+    slideModal.querySelector('.modal-isi').textContent = packageIsi
+    slideModal.querySelector('.modal-subjek').textContent = packageSubjek
+    slideModal.querySelector('.modal-price').textContent = packagePrice
   })
 }
