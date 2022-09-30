@@ -91,10 +91,10 @@ async function initializeSlides() {
   }
 }
 
-window.onload = () => {
-  if (isAdmin())
+if (isAdmin())
     enableAddButton()
 
+window.onload = () => {
   initializeSlides()
 
   let slideModal = document.getElementById('slideModal')
