@@ -77,36 +77,34 @@ async function initializeSlides() {
 
 
 
-window.onload = () => {
-  const localStorage = window.localStorage
+const localStorage = window.localStorage
 
-  const isAdmin = () => {
-    if (parseJwt(localStorage.getItem('token'))['role'] != 'admin')
-      return false
+const isAdmin = () => {
+  if (parseJwt(localStorage.getItem('token'))['role'] != 'admin')
+    return false
 
-    return true
-  }
-
-  if (isAdmin())
-    enableAddButton()
-
-  initializeSlides()
-
-  let slideModal = document.getElementById('slideModal')
-  slideModal.addEventListener('show.bs.modal', function (event) {
-    // Button that triggered the modal
-    let button = event.relatedTarget
-    // Extract info from data-bs-* attributes
-    let slideName = button.getAttribute('data-bs-name')
-    let slideDesc = button.getAttribute('data-bs-desc')
-    let slidePrev = button.getAttribute('data-bs-preview')
-    let slidePrice = button.getAttribute('data-bs-price')
-
-    slideModal.querySelector('.modal-title').textContent = slideName
-    slideModal.querySelector('.modal-desc').textContent = slideDesc
-    slideModal.querySelector('.modal-price').textContent = slidePrice
-  })
+  return true
 }
+
+if (isAdmin())
+  enableAddButton()
+
+initializeSlides()
+
+let slideModal = document.getElementById('slideModal')
+slideModal.addEventListener('show.bs.modal', function (event) {
+  // Button that triggered the modal
+  let button = event.relatedTarget
+  // Extract info from data-bs-* attributes
+  let slideName = button.getAttribute('data-bs-name')
+  let slideDesc = button.getAttribute('data-bs-desc')
+  let slidePrev = button.getAttribute('data-bs-preview')
+  let slidePrice = button.getAttribute('data-bs-price')
+
+  slideModal.querySelector('.modal-title').textContent = slideName
+  slideModal.querySelector('.modal-desc').textContent = slideDesc
+  slideModal.querySelector('.modal-price').textContent = slidePrice
+})
 
 
 
