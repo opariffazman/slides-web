@@ -1,20 +1,3 @@
-
-const parseJwt = (token) => {
-  let base64Url = token.split('.')[1]
-  let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-  let jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
-    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-  }).join(''))
-
-  return JSON.parse(jsonPayload);
-}
-
-
-
-const enableAddButton = () => {
-  document.getElementById('addButton').style.display = 'block'
-}
-
 const goToAddSlide = () => {
   window.location.assign("/add")
 }
@@ -77,46 +60,49 @@ async function initializeSlides() {
 
 
 
-const localStorage = window.localStorage
+window.onload = () => {
+  const localStorage = window.localStorage
 
-const isAdmin = () => {
-  if (parseJwt(localStorage.getItem('token'))['role'] != 'admin')
-    return false
+  const parseJwt = (token) => {
+    let base64Url = token.split('.')[1]
+    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+    let jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+    }).join(''))
 
-  return true
+    return JSON.parse(jsonPayload);
+  }
+
+  const isAdmin = () => {
+    if (parseJwt(localStorage.getItem('token'))['role'] !== 'admin')
+      return false
+
+    localStorage.getItem('token')
+    console.log('isAdmin() true')
+    return true
+  }
+
+  const enableAddButton = () => {
+    document.getElementById('addButton').style.display = 'block'
+  }
+
+  if (isAdmin())
+    enableAddButton()
+
+  initializeSlides()
+
+  let slideModal = document.getElementById('slideModal')
+  slideModal.addEventListener('show.bs.modal', function (event) {
+    // Button that triggered the modal
+    let button = event.relatedTarget
+    // Extract info from data-bs-* attributes
+    let slideName = button.getAttribute('data-bs-name')
+    let slideDesc = button.getAttribute('data-bs-desc')
+    let slidePrev = button.getAttribute('data-bs-preview')
+    let slidePrice = button.getAttribute('data-bs-price')
+
+    slideModal.querySelector('.modal-title').textContent = slideName
+    slideModal.querySelector('.modal-desc').textContent = slideDesc
+    slideModal.querySelector('.modal-price').textContent = slidePrice
+  })
 }
-
-if (isAdmin())
-  enableAddButton()
-
-initializeSlides()
-
-let slideModal = document.getElementById('slideModal')
-slideModal.addEventListener('show.bs.modal', function (event) {
-  // Button that triggered the modal
-  let button = event.relatedTarget
-  // Extract info from data-bs-* attributes
-  let slideName = button.getAttribute('data-bs-name')
-  let slideDesc = button.getAttribute('data-bs-desc')
-  let slidePrev = button.getAttribute('data-bs-preview')
-  let slidePrice = button.getAttribute('data-bs-price')
-
-  slideModal.querySelector('.modal-title').textContent = slideName
-  slideModal.querySelector('.modal-desc').textContent = slideDesc
-  slideModal.querySelector('.modal-price').textContent = slidePrice
-})
-
-
-
-// const localStorageAsync = {
-//   set: function (key, value) {
-//       return Promise.resolve().then(function () {
-//           localStorage.setItem(key, value)
-//       })
-//   },
-//   get: function (key) {
-//       return Promise.resolve().then(function () {
-//           return localStorage.getItem(key)
-//       })
-//   }
-// }
