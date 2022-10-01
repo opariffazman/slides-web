@@ -1,7 +1,7 @@
 {
-  "name": "express-hello-world",
+  "name": "slides-web-app",
   "version": "1.0.0",
-  "description": "Expressjs Hello World example to provide faster start deploying on Cyclic platform",
+  "description": "Expressjs Web Application",
   "main": "server.js",
   "scripts": {
     "serve": "nodemon --watch . server.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cyclic-software/express-hello-world.git"
+    "url": "git+https://github.com/cyclic-software/slides-web-app.git"
   },
-  "author": "Cyclic Software",
+  "author": "opariffazman",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cyclic-software/express-hello-world/issues"
+    "url": "https://github.com/cyclic-software/slides-web-app/issues"
   },
-  "homepage": "https://github.com/cyclic-software/express-hello-world#readme",
+  "homepage": "https://github.com/cyclic-software/slides-web-app#readme",
   "dependencies": {
     "express": "^4.17.1"
   },
