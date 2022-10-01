@@ -104,10 +104,7 @@ async function initializeSlides() {
 
   initializeModals()
 
-  if (isAdmin())
-    document.getElementById('addButton').style.display = 'block'
-
-  document.getElementById('addButton').style.display = 'none'
+  isAdmin() ? document.getElementById('addButton').style.display = 'block' :  document.getElementById('addButton').style.display = 'none'
 
 }
 
