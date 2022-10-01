@@ -47,6 +47,7 @@ const initializeModals = () => {
 
 async function initializeSlides() {
   console.log('initializing slides')
+
   let slides
 
   const res = await fetch('https://slides.cyclic.app/api/listPackage')
@@ -103,10 +104,12 @@ async function initializeSlides() {
 
   initializeModals()
 
+  if (isAdmin())
+    document.getElementById('addButton').style.display = 'block'
+
+  document.getElementById('addButton').style.display = 'none'
+
 }
 
-if (isAdmin())
-  document.getElementById('addButton').style.display = 'block'
 
-document.getElementById('addButton').style.display = 'none'
 
