@@ -72,7 +72,6 @@ async function initializeSlides() {
     let packageUrl = packageInfo['url']
 
     console.log(packageId, packageTajuk, packageTingkatan, packageIsi, packageSubjek, packagePrice, packageUrl)
-    let button = isAdmin() ? "Edit" : "View"
     let div = document.createElement("div")
     div.classList.add("col");
     div.innerHTML = `
@@ -93,7 +92,8 @@ async function initializeSlides() {
             data-bs-tingkatan="${packageTingkatan}"
             data-bs-isi="${packageIsi}"
             data-bs-subjek="${packageSubjek}"
-            data-bs-price="${packagePrice}">${button}</button>
+            data-bs-price="${packagePrice}">View</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
           </div>
           <small class="text-muted">${packagePrice}</small>
         </div>
