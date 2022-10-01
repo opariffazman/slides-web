@@ -25,8 +25,25 @@ const isAdmin = () => {
   return true
 }
 
-if (isAdmin())
-  document.getElementById('addButton').style.display = 'block'
+const initializeModals = () => {
+  let slideModal = document.getElementById('slideModal')
+  slideModal.addEventListener('show.bs.modal', function (event) {
+    // Button that triggered the modal
+    let button = event.relatedTarget
+    // Extract info from data-bs-* attributes
+    let packageTajuk = button.getAttribute('data-bs-tajuk')
+    let packageTingkatan = button.getAttribute('data-bs-tingkatan')
+    let packageIsi = button.getAttribute('data-bs-isi')
+    let packageSubjek = button.getAttribute('data-bs-subjek')
+    let packagePrice = button.getAttribute('data-bs-price')
+
+    slideModal.querySelector('.modal-tajuk').textContent = packageTajuk
+    slideModal.querySelector('.modal-tingkatan').textContent = packageTingkatan
+    slideModal.querySelector('.modal-isi').textContent = packageIsi
+    slideModal.querySelector('.modal-subjek').textContent = packageSubjek
+    slideModal.querySelector('.modal-price').textContent = packagePrice
+  })
+}
 
 async function initializeSlides() {
   console.log('initializing slides')
@@ -88,22 +105,8 @@ async function initializeSlides() {
 
 }
 
-const initializeModals = () => {
-  let slideModal = document.getElementById('slideModal')
-  slideModal.addEventListener('show.bs.modal', function (event) {
-    // Button that triggered the modal
-    let button = event.relatedTarget
-    // Extract info from data-bs-* attributes
-    let packageTajuk = button.getAttribute('data-bs-tajuk')
-    let packageTingkatan = button.getAttribute('data-bs-tingkatan')
-    let packageIsi = button.getAttribute('data-bs-isi')
-    let packageSubjek = button.getAttribute('data-bs-subjek')
-    let packagePrice = button.getAttribute('data-bs-price')
+if (isAdmin())
+  document.getElementById('addButton').style.display = 'block'
 
-    slideModal.querySelector('.modal-tajuk').textContent = packageTajuk
-    slideModal.querySelector('.modal-tingkatan').textContent = packageTingkatan
-    slideModal.querySelector('.modal-isi').textContent = packageIsi
-    slideModal.querySelector('.modal-subjek').textContent = packageSubjek
-    slideModal.querySelector('.modal-price').textContent = packagePrice
-  })
-}
+document.getElementById('addButton').style.display = 'none'
+
