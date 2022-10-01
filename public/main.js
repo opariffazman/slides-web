@@ -1,39 +1,53 @@
+const localStorage = window.localStorage
+
 const goToAddSlide = () => {
   window.location.assign("/add")
 }
 
-window.onload = () => {
-  const localStorage = window.localStorage
+const isAdmin = () => {
+  if (localStorage.getItem('token') === null)
+    return false
 
-  async function initializeSlides() {
-    let slides
+  if (parseJwt(localStorage.getItem('token'))['role'] !== 'admin')
+    return false
 
-    const res = await fetch('https://slides.cyclic.app/api/listPackage')
+  console.log('isAdmin() true')
+  return true
+}
 
-    slides = await res.json()
+if (isAdmin())
+  document.getElementById('addButton').style.display = 'block'
 
-    let container = document.getElementById('main')
-    for (let index = 0; index < slides.length; index++) {
-      let slide = slides[index].Key
-      slide = slide.replace(".json", "")
+async function initializeSlides() {
+  console.log('initializing slides')
+  let slides
 
-      const res = await fetch(`https://slides.cyclic.app/api/files?name=${slide}`)
+  const res = await fetch('https://slides.cyclic.app/api/listPackage')
 
-      let packageInfo = await res.json()
+  slides = await res.json()
 
-      let packageId = packageInfo['id']
-      let packageTajuk = packageInfo['tajuk']
-      let packageTingkatan = packageInfo['tingkatan']
-      let packageSubjek = packageInfo['subjek']
-      let packageIsi = packageInfo['isi']
-      let packagePrice = packageInfo['price']
-      let packageUrl = packageInfo['url']
+  let container = document.getElementById('main')
+  for (let index = 0; index < slides.length; index++) {
+    let slide = slides[index].Key
+    slide = slide.replace(".json", "")
 
-      console.log(packageId, packageTajuk, packageTingkatan, packageIsi, packageSubjek, packagePrice, packageUrl)
-      let button = isAdmin() ? "Edit" : "View"
-      let div = document.createElement("div")
-      div.classList.add("col");
-      div.innerHTML = `
+    const res = await fetch(`https://slides.cyclic.app/api/files?name=${slide}`)
+
+    let packageInfo = await res.json()
+
+    let packageId = packageInfo['uid']
+    let packageTajuk = packageInfo['tajuk']
+    let packageTingkatan = packageInfo['tingkatan']
+    let packageSubjek = packageInfo['subjek']
+    let packageIsi = packageInfo['isi']
+    let packagePrice = packageInfo['price']
+    let packageUrl = packageInfo['url']
+
+    console.log(packageId, packageTajuk, packageTingkatan, packageIsi, packageSubjek, packagePrice, packageUrl)
+    let button = isAdmin() ? "Edit" : "View"
+    let div = document.createElement("div")
+    div.classList.add("col");
+    div.innerHTML = `
       <div class="card shadow-sm">
       <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
         role="img" aria-label="${packageTajuk}" preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -57,38 +71,24 @@ window.onload = () => {
         </div>
       </div>
       `
-      container.appendChild(div)
-    }
+    container.appendChild(div)
   }
 
-  const parseJwt = (token) => {
-    let base64Url = token.split('.')[1]
-    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-    let jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-    }).join(''))
+  initializeModals()
 
-    return JSON.parse(jsonPayload);
-  }
+}
 
-  const isAdmin = () => {
-    if (parseJwt(localStorage.getItem('token'))['role'] !== 'admin')
-      return false
+const parseJwt = (token) => {
+  let base64Url = token.split('.')[1]
+  let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+  let jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+  }).join(''))
 
-    localStorage.getItem('token')
-    console.log('isAdmin() true')
-    return true
-  }
+  return JSON.parse(jsonPayload);
+}
 
-  const enableAddButton = () => {
-    document.getElementById('addButton').style.display = 'block'
-  }
-
-  if (isAdmin())
-    enableAddButton()
-
-  initializeSlides()
-
+const initializeModals = () => {
   let slideModal = document.getElementById('slideModal')
   slideModal.addEventListener('show.bs.modal', function (event) {
     // Button that triggered the modal
