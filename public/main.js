@@ -54,11 +54,14 @@ async function initializeSlides() {
 
   slides = await res.json()
 
+  isAdmin() ? document.getElementById('addButton').style.display = 'block' :  document.getElementById('addButton').style.display = 'none'
+
+  if (slides === null)
+    return
+
   let container = document.getElementById('main')
   for (let index = 0; index < slides.length; index++) {
     let slide = slides[index].Key
-    slide = slide.replace(".json", "")
-
     const res = await fetch(`https://slides.cyclic.app/api/files?name=${slide}`)
 
     let packageInfo = await res.json()
@@ -104,7 +107,6 @@ async function initializeSlides() {
 
   initializeModals()
 
-  isAdmin() ? document.getElementById('addButton').style.display = 'block' :  document.getElementById('addButton').style.display = 'none'
 
 }
 
