@@ -33,7 +33,6 @@ const addSlide = () => {
     body: JSON.stringify(data),
   })
     .then((response) => response)
-    .then((data) => { console.log('Success:', data) })
     .then((data) => { alert(`${data.tajuk} Added Successfully`); })
     .catch((error) => {
       console.error('Error:', error)
