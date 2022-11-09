@@ -33,7 +33,7 @@ const addSlide = () => {
     body: JSON.stringify(data),
   })
     .then((response) => response)
-    .then((data) => { alert(`${JSON.stringify(data)} Added Successfully`); })
+    .then((data) => { alert(`${JSON.parse(data)} Added Successfully`); })
     .catch((error) => {
       console.error('Error:', error)
     })
