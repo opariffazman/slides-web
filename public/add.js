@@ -24,7 +24,7 @@ const addSlide = () => {
   }
 
   const accessToken = JSON.parse(localStorage.getItem('token'))['accessToken']
-  fetch(`https://slides.cyclic.app/api/files?name=package${tajuk}`, {
+  fetch(`https://slides.cyclic.app/api/files?name=pakej${tajuk}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ const addSlide = () => {
     body: JSON.stringify(data),
   })
     .then((response) => response)
-    .then((data) => { alert(`${data} Added Successfully`); })
+    .then((data) => { alert(`${JSON.stringify(data)} Added Successfully`); })
     .catch((error) => {
       console.error('Error:', error)
     })
