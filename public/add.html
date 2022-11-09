@@ -95,15 +95,15 @@
     <main>
       <div class="py-5 text-center">
         <!-- <img class="d-block mx-auto mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
-        <h2>Add New</h2>
+        <h2>Tambah Pakej Baru</h2>
       </div>
-      <h4>Required Information</h4>
+      <h3>Informasi diperlukan</h3> <br>
       <div class="col-md-12 col-lg-12">
         <form class="needs-validation" novalidate>
           <div class="row g-3">
             <div class="col-7">
-              <label for="tajuk" class="form-label">Pakej</label>
-              <input type="text" class="form-control" id="tajuk" placeholder="Pakej A" required>
+              <label for="tajuk" class="form-label">Nama Pakej</label>
+              <input type="text" class="form-control" id="tajuk" placeholder="A" required>
               <div class="invalid-feedback">
                 Tajuk diperlukan.
               </div>
@@ -111,7 +111,15 @@
 
             <div class="col-5">
               <label for="tingkatan" class="form-label">Tingkatan</label>
-              <input type="text" class="form-control" id="tingkatan" placeholder="4" required>
+              <select class="form-select" id="tingkatan" required>
+                <option value="" selected disabled hidden>Pilih Tingkatan</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+              </select>
               <div class="invalid-feedback">
                 Tingkatan diperlukan.
               </div>
@@ -119,7 +127,11 @@
 
             <div class="col-7">
               <label for="subjek" class="form-label">Subjek</label>
-              <input  type="text" class="form-control" id="subjek" placeholder="Matematik" required>
+              <select class="form-select" id="subjek" required>
+                <option value="" selected disabled hidden>Pilih Subjek</option>
+                <option value="matematik">Matematik</option>
+                <option value="matematik_tambahan">Matematik Tambahan</option>
+              </select>
               <div class="invalid-feedback">
                 Subjek diperlukan.
               </div>
@@ -127,7 +139,7 @@
 
             <div class="col-5">
               <label for="price" class="form-label">Harga (MYR)</label>
-              <input type="number" class="form-control" id="price" placeholder="30" required>
+              <input type="number" class="form-control" id="price" placeholder="30" required min="0">
               <div class="invalid-feedback">
                 Harga diperlukan.
               </div>
@@ -135,19 +147,18 @@
 
             <div class="col-12">
               <label for="isi" class="form-label">Isi kandungan</label>
-              <textarea  class="form-control" id="isi" placeholder="Skema markah, etc" rows="5" required></textarea>
+              <textarea class="form-control" id="isi" placeholder="Skema markah, etc" rows="5" required></textarea>
               <div class="invalid-feedback">
                 Isi kandungan diperlukan.
               </div>
             </div>
 
             <div class="col-12">
-              <label for="url" class="form-label">Google Drive Link (Url)</label>
+              <label for="url" class="form-label">Pautan OneDrive (Url)</label>
               <input type="text" class="form-control" id="url"
-                placeholder="https://drive.google.com/file/d/1qrqrUWYhldP6a5x3JzBpbskBjl4PfsAo/view?usp=sharing"
-                required>
+                placeholder="https://1drv.ms/t/s!AqfyZn91kScpxmAvDeRhqpCcuOuw?e=GC3lGi" required>
               <div class="invalid-feedback">
-                Google drive url diperlukan.
+                Pautan OneDrive diperlukan.
               </div>
             </div>
 
