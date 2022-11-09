@@ -33,7 +33,7 @@ const addSlide = () => {
     body: JSON.stringify(data),
   })
     .then((response) => response)
-    .then((data) => { alert(`${JSON.parse(data)} Added Successfully`); })
+    .then((data) => { console.log(data); alert('Pakej berjaya ditambah') })
     .catch((error) => {
       console.error('Error:', error)
     })
