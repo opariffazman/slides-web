@@ -50,7 +50,7 @@ async function initializeSlides() {
 
   let slides
 
-  const res = await fetch('https://slides.cyclic.app/api/listPackage')
+  const res = await fetch('https://slides.cyclic.app/api/listFiles')
 
   slides = await res.json()
 
