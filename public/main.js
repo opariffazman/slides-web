@@ -31,30 +31,27 @@ const initializeModals = () => {
     // Button that triggered the modal
     let button = event.relatedTarget
     // Extract info from data-bs-* attributes
-    let packageTajuk = button.getAttribute('data-bs-tajuk')
-    let packageTingkatan = button.getAttribute('data-bs-tingkatan')
-    let packageIsi = button.getAttribute('data-bs-isi')
-    let packageSubjek = button.getAttribute('data-bs-subjek')
-    let packagePrice = button.getAttribute('data-bs-price')
+    let tajuk = button.getAttribute('data-bs-tajuk')
+    let tingkatan = button.getAttribute('data-bs-tingkatan')
+    let isi = button.getAttribute('data-bs-isi')
+    let subjek = button.getAttribute('data-bs-subjek')
+    let price = button.getAttribute('data-bs-price')
 
-    slideModal.querySelector('.modal-tajuk').textContent = packageTajuk
-    slideModal.querySelector('.modal-tingkatan').textContent = packageTingkatan
-    slideModal.querySelector('.modal-isi').textContent = packageIsi
-    slideModal.querySelector('.modal-subjek').textContent = packageSubjek
-    slideModal.querySelector('.modal-price').textContent = packagePrice
+    slideModal.querySelector('.modal-tajuk').textContent = tajuk
+    slideModal.querySelector('.modal-tingkatan').textContent = tingkatan
+    slideModal.querySelector('.modal-isi').textContent = isi
+    slideModal.querySelector('.modal-subjek').textContent = subjek
+    slideModal.querySelector('.modal-price').textContent = price
   })
 }
 
 async function initializeSlides() {
   console.log('initializing slides')
 
-  let slides
-
   const res = await fetch('https://slides.cyclic.app/api/listFiles')
+  let slides = await res.json()
 
-  slides = await res.json()
-
-  isAdmin() ? document.getElementById('addButton').style.display = 'block' :  document.getElementById('addButton').style.display = 'none'
+  isAdmin() ? document.getElementById('addButton').style.display = 'block' : document.getElementById('addButton').style.display = 'none'
 
   if (slides === null)
     return
@@ -64,46 +61,46 @@ async function initializeSlides() {
     let slide = slides[index].Key
     const res = await fetch(`https://slides.cyclic.app/api/files?name=${slide}`)
 
-    let packageInfo = await res.json()
+    let info = await res.json()
+    let uid = info['uid']
+    let tajuk = info['tajuk']
+    let tingkatan = info['tingkatan']
+    let subjek = info['subjek'] === 'matematik' ? 'Matematik' : 'Matematik Tambahan'
+    let isi = info['isi']
+    let price = info['price']
+    // let url = info['url']
 
-    let packageId = packageInfo['uid']
-    let packageTajuk = packageInfo['tajuk']
-    let packageTingkatan = packageInfo['tingkatan']
-    let packageSubjek = packageInfo['subjek']
-    let packageIsi = packageInfo['isi']
-    let packagePrice = packageInfo['price']
-    let packageUrl = packageInfo['url']
-
-    console.log(packageId, packageTajuk, packageTingkatan, packageIsi, packageSubjek, packagePrice, packageUrl)
+    // console.log(uid, tajuk, tingkatan, isi, subjek, price, url)
     let div = document.createElement("div")
     div.classList.add("col");
     div.innerHTML = `
       <div class="card shadow-sm">
-      <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
-        role="img" aria-label="${packageTajuk}" preserveAspectRatio="xMidYMid slice" focusable="false">
-        <title>Placeholder</title>
-        <rect width="100%" height="100%" fill="#55595c" />
-        <text x="50%" y="50%" fill="#eceeef" dy=".3em">${packageTajuk}</text>
-      </svg>
+      <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="presentation.svg" class="img-fluid" alt="...">
 
       <div class="card-body">
-        <p class="card-text"><b>${packageTajuk}</b></br><i>${packageIsi}</i></p>
+        <div class="d-flex justify-content-between">
+          <p class="card-text"><b>Pakej ${tajuk}</b></p>
+          <p class="card-text text-muted">${subjek}</p>
+        </div>
+        <p class="card-text">Tingkatan ${tingkatan}</p>
+        <p class="card-text"><i>${isi}</i></p>
         <div class="d-flex justify-content-between align-items-center">
-          <div class="btn-group">
-            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#slideModal"
-            data-bs-tajuk="${packageTajuk}"
-            data-bs-tingkatan="${packageTingkatan}"
-            data-bs-isi="${packageIsi}"
-            data-bs-subjek="${packageSubjek}"
-            data-bs-price="${packagePrice}">View</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-          </div>
-          <small class="text-muted">${packagePrice}</small>
+          <button type="button" class="btn btn-secondary">Tambah</button>
+          <small class="text-muted">RM ${price}</small>
         </div>
       </div>
       `
     container.appendChild(div)
   }
+
+  // <div class="btn-group">
+  //           <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#slideModal"
+  //           data-bs-tajuk="${tajuk}"
+  //           data-bs-tingkatan="${tingkatan}"
+  //           data-bs-isi="${isi}"
+  //           data-bs-subjek="${subjek}"
+  //           data-bs-price="${price}">View</button>
+  //         </div>
 
   initializeModals()
 
